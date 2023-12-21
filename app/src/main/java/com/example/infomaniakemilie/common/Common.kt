@@ -8,6 +8,9 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 
+/*
+ * Fonction reprise ici : https://issuetracker.google.com/issues/139320238?pli=1
+ */
 fun spannableStringToAnnotatedString(text: CharSequence): AnnotatedString {
     return if (text is Spanned) {
         val spanStyles = mutableListOf<AnnotatedString.Range<SpanStyle>>()
