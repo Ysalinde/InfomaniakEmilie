@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation
+package com.example.infomaniakemilie.presentation.allshows
 
 import android.text.Html
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation
+package com.example.infomaniakemilie.presentation.allshows
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement

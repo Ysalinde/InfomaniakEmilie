@@ -3,4 +3,6 @@
     <string name="welcome">Welcome on my app !</string>
     <string name="dev_name">Emilie Galland</string>
     <string name="get_all_shows">Get all the Shows</string>
+    <string name="back">back</string>
+    <string name="myshows">Shows to know me better</string>
 </resources>

@@ -7,8 +7,8 @@ import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.example.infomaniakemilie.data.local.ShowDatabase
 import com.example.infomaniakemilie.data.local.ShowEntity
+import com.example.infomaniakemilie.data.remote.AllShowsRemoteMediator
 import com.example.infomaniakemilie.data.remote.MazeApi
-import com.example.infomaniakemilie.data.remote.ShowRemoteMediator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,7 +50,7 @@ object AppModule {
     fun provideShowPager(showDb: ShowDatabase, mazeApi: MazeApi): Pager<Int, ShowEntity> {
         return Pager(
             config = PagingConfig(pageSize = 20),
-            remoteMediator = ShowRemoteMediator(
+            remoteMediator = AllShowsRemoteMediator(
                 showDb = showDb,
                 mazeApi = mazeApi
             ),

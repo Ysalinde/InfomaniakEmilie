@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation
+package com.example.infomaniakemilie.presentation.allshows
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
-class ShowViewModel @Inject constructor(
+class AllShowViewModel @Inject constructor(
     pager: Pager<Int, ShowEntity>
 ): ViewModel(){
 

@@ -12,7 +12,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
-class ShowRemoteMediator(
+class AllShowsRemoteMediator(
     private val showDb: ShowDatabase,
     private val mazeApi: MazeApi
 ): RemoteMediator<Int, ShowEntity>() {

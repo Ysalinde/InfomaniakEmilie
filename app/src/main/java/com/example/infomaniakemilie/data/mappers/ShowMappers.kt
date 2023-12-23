@@ -23,3 +23,13 @@ fun ShowEntity.toShow(): Show {
         img = image
     )
 }
+
+fun ShowDto.toShow(): Show{
+    return Show(
+        id = id,
+        name = name,
+        language = language,
+        summary = summary,
+        img = image.medium
+    )
+}

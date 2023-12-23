@@ -1,6 +1,7 @@
 package com.example.infomaniakemilie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -9,21 +10,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -35,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,8 +43,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.infomaniakemilie.presentation.ShowScreen
-import com.example.infomaniakemilie.presentation.ShowViewModel
+import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
+import com.example.infomaniakemilie.presentation.allshows.ShowScreen
+import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
+import com.example.infomaniakemilie.presentation.myshows.MyShowsViewModel
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -86,8 +86,12 @@ fun NavGraph(navController: NavHostController){
             MainScreenLayout(navController)
         }
 
-        composable(route = "random_show"){
+        composable(route = "allshows"){
             ShowAllTheShowsScreen(navController)
+        }
+
+        composable(route = "myshows"){
+            ShowMyShowsScreen(navController)
         }
     }
 }
@@ -153,10 +157,18 @@ private fun MainScreenLayout(navController: NavHostController){
         ) {
             Button (
                 onClick = {
-                    navController.navigate("random_show")
+                    navController.navigate("allshows")
                 }
             ) {
                 Text(text = stringResource(id = R.string.get_all_shows))
+            }
+            Spacer(modifier = Modifier.width(6.dp))
+            Button (
+                onClick = {
+                    navController.navigate("myshows")
+                }
+            ) {
+                Text(text = stringResource(id = R.string.myshows))
             }
         }
     }
@@ -175,39 +187,61 @@ private fun MainAppLayoutPreview(){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ShowAllTheShowsScreen(navController: NavHostController){
-    val viewModel = hiltViewModel<ShowViewModel>()
+    val viewModel = hiltViewModel<AllShowViewModel>()
     val shows = viewModel.showPagingFlow.collectAsLazyPagingItems()
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Top app bar")
+                    Text(text = stringResource(id = R.string.back))
+                },
+                navigationIcon = {
+                    IconButton(onClick = {navController.navigate("homepage")}) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
                 }
             )
         },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary,
-            ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "Bottom app bar",
-                )
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { }) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
-            }
-        }
     ){ contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
             ShowScreen(shows = shows)
         }
 
     }
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ShowMyShowsScreen(navController: NavHostController){
+    val viewModel = hiltViewModel<MyShowsViewModel>()
+    viewModel.getMyShowsById()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.back))
+                },
+                navigationIcon = {
+                    IconButton(onClick = {navController.navigate("homepage")}) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                }
+            )
+        },
+    ){ contentPadding ->
+        Column(modifier = Modifier.padding(contentPadding)) {
+            viewModel.myShowList.value?.let {
+                Log.i("MWSHOWS", "${it}")
+                MyShowsScreen(it, viewModel.errorMessage)
+            }
+        }
+
+    }
 }
