@@ -11,6 +11,9 @@ import com.example.infomaniakemilie.data.mappers.toShowEntity
 import retrofit2.HttpException
 import java.io.IOException
 
+/*
+ *
+ */
 @OptIn(ExperimentalPagingApi::class)
 class AllShowsRemoteMediator(
     private val showDb: ShowDatabase,
