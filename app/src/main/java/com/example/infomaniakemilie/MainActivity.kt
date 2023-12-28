@@ -1,5 +1,6 @@
 package com.example.infomaniakemilie
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -61,7 +62,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    MainScreen(this)
                 }
             }
         }
@@ -69,15 +70,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MainScreen(){
+private fun MainScreen(context: Context){
     val navController = rememberNavController()
-    NavGraph(navController)
+    NavGraph(navController, context)
     navController.navigate("homepage")
 
 }
 
 @Composable
-fun NavGraph(navController: NavHostController){
+fun NavGraph(navController: NavHostController, context: Context){
+
     NavHost(
         navController = navController,
         startDestination = "homepage"
@@ -89,7 +91,6 @@ fun NavGraph(navController: NavHostController){
         composable(route = "allshows"){
             ShowAllTheShowsScreen(navController)
         }
-
         composable(route = "myshows"){
             ShowMyShowsScreen(navController)
         }
@@ -135,12 +136,6 @@ fun DevCard() {
     }
 }
 
-@Preview
-@Composable
-fun DevCardPreview(){
-    DevCard()
-}
-
 @Composable
 private fun MainScreenLayout(navController: NavHostController){
     Column(
@@ -173,16 +168,6 @@ private fun MainScreenLayout(navController: NavHostController){
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun MainAppLayoutPreview(){
-    InfomaniakEmilieTheme{
-        MainScreenLayout(rememberNavController())
-    }
-}
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -243,5 +228,21 @@ private fun ShowMyShowsScreen(navController: NavHostController){
             }
         }
 
+    }
+}
+
+
+// PREVIEW PART
+@Preview
+@Composable
+fun DevCardPreview(){
+    DevCard()
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MainAppLayoutPreview(){
+    InfomaniakEmilieTheme{
+        MainScreenLayout(rememberNavController())
     }
 }

@@ -8,8 +8,12 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 
+// Selection of shows I like
+val listOfMyShowsId = listOf(67017, 41007, 6577, 2993, 37675, 55138, 170, 63236, 60169, 36196,
+    36505, 59755, 64352, 35951, 38963, 28276, 28717, 31568, 1939, 8244, 69956, 63451, 65876)
+
 /*
- * Fonction reprise ici : https://issuetracker.google.com/issues/139320238?pli=1
+ * Function shameless took from : https://issuetracker.google.com/issues/139320238?pli=1
  */
 fun spannableStringToAnnotatedString(text: CharSequence): AnnotatedString {
     return if (text is Spanned) {
@@ -35,19 +39,11 @@ fun spannableStringToAnnotatedString(text: CharSequence): AnnotatedString {
 }
 
 /*
- * Prend un nombre (count) dans une liste
+ * Choose a number (count) in a list
  */
 fun <T> List<T>.takeRandom(count: Int): List<T> {
     require(count <= size) { "La taille spécifiée est supérieure à la taille de la liste." }
 
     val shuffledList = shuffled()
     return shuffledList.subList(0, count)
-}
-
-inline fun <T1 : Any, T2 : Any, R : Any> safeLet(p1: T1?, p2: T2?, block: (T1, T2) -> R?): R? {
-    return if (p1 != null && p2 != null) block(p1, p2) else null
-}
-
-inline fun <T1 : Any, T2 : Any, T3 : Any, R : Any> safeLet(p1: T1?, p2: T2?, p3: T3?, block: (T1, T2, T3) -> R?): R? {
-    return if (p1 != null && p2 != null && p3 != null) block(p1, p2, p3) else null
 }

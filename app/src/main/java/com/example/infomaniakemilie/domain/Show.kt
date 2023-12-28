@@ -5,6 +5,7 @@ data class Show(
     val name: String,
     val language: String,
     val summary: String?,
-    val image: String?,
+    val mediumImage: String?,
+    val largeImage: String?,
     val rating: Double?,
 )

@@ -1,5 +1,8 @@
 package com.example.infomaniakemilie.data.remote
 
+import com.example.infomaniakemilie.common.Average
+import com.example.infomaniakemilie.common.Image
+
 /*
  * Show - Data to object
  * Coming from JSON request from API
@@ -11,19 +14,4 @@ data class ShowDto(
     val summary: String?,
     val image: Image?,
     val rating: Average?,
-)
-
-/*
- * Data class to access to img address from API
- */
-data class Image(
-    val medium: String,
-    val original: String
-)
-
-/*
- * Data class to access to the rating
- */
-data class Average(
-    val note: Double?,
 )

@@ -11,7 +11,8 @@ fun ShowDto.toShowEntity(): ShowEntity{
         name = name,
         language = language,
         summary = summary,
-        image = image?.medium,
+        mediumImg = image?.medium,
+        largeImg = image?.original,
         rating = rating?.note,
     )
 }
@@ -22,7 +23,8 @@ fun ShowEntity.toShow(): Show {
         name = name,
         language = language,
         summary = summary,
-        image = image,
+        mediumImage = mediumImg ,
+        largeImage= largeImg ,
         rating = rating,
     )
 }
@@ -33,7 +35,8 @@ fun ShowDto.toShow(): Show {
         name = name,
         language = language,
         summary = summary,
-        image = image?.medium,
+        mediumImage = image?.medium,
+        largeImage = image?.original,
         rating = rating?.note,
         )
 }

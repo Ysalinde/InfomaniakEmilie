@@ -14,6 +14,7 @@ data class ShowEntity(
     val name: String,
     val language: String,
     val summary: String?,
-    val image: String?,
+    val mediumImg: String?,
+    val largeImg: String?,
     val rating: Double?,
 )

@@ -43,7 +43,7 @@ fun ShowItem(
                 .padding(16.dp)
         ) {
             AsyncImage(
-                model = show.image,
+                model = show.mediumImage,
                 contentDescription = show.name,
                 modifier = Modifier
                     .weight(1f)
@@ -89,7 +89,8 @@ fun BeerItemPreview() {
                 name = "Kirby Buckets",
                 language = "English",
                 summary = toString(summary),
-                image = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
+                mediumImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
+                largeImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
                 rating = null
             ),
             modifier = Modifier.fillMaxWidth()
