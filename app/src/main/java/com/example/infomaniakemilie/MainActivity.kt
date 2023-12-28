@@ -2,7 +2,6 @@ package com.example.infomaniakemilie
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -223,7 +222,6 @@ private fun ShowMyShowsScreen(navController: NavHostController){
     ){ contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
             viewModel.myShowList.value?.let {
-                Log.i("MWSHOWS", "${it}")
                 MyShowsScreen(it, viewModel.errorMessage)
             }
         }

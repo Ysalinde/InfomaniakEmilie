@@ -1,6 +1,6 @@
 package com.example.infomaniakemilie.data.remote
 
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -31,10 +31,10 @@ interface MazeApi {
      * The request will find a show by the id
      * @arg id: id of the show
      *
-     * @return Call<ShowDto>: the response with the JSON to parse
+     * @return Response<ShowDto>: the response with the JSON body
      */
     @GET("/shows/{id}")
-    fun getShowById(@Path("id") showId: Int): Call<ShowDto>
+    suspend fun getShowById(@Path("id") showId: Int): Response<ShowDto>
 
     companion object {
         const val BASE_URL = "https://api.tvmaze.com/"
