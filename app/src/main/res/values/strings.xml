@@ -5,4 +5,6 @@
     <string name="get_all_shows">Get all the Shows</string>
     <string name="back">back</string>
     <string name="myshows">Shows to know me better</string>
+    <string name="noInternet">You don\'t have internet</string>
+    <string name="settings">SETTINGS</string>
 </resources>
