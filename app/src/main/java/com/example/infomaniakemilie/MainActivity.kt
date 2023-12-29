@@ -2,6 +2,7 @@ package com.example.infomaniakemilie
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -27,16 +28,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -57,6 +55,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.infomaniakemilie.common.isConnected
 import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
 import com.example.infomaniakemilie.presentation.allshows.ShowScreen
+import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import com.example.infomaniakemilie.ui.theme.Pink80
@@ -151,7 +150,6 @@ fun DevCard() {
 @Composable
 private fun MainScreenLayout(navController: NavHostController, context: Context){
     val openDialog = remember { mutableStateOf(false) }
-    var searchText by remember { mutableStateOf("") }
 
     Scaffold{ contentPadding ->
             Column(
@@ -165,15 +163,6 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                 DevCard()
 
                 Spacer(modifier = Modifier.width(25.dp))
-
-                OutlinedTextField(
-                    value = searchText,
-                    onValueChange = { searchText = it },
-                    label = { Text("Rechercher") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -195,6 +184,7 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                             if (isConnected(context)) {
                                 navController.navigate("allshows")
                             } else {
+                                Log.i("INTERNET", "No Connection - Get Shows Card")
                                 openDialog.value = true
                             }
                         })) {
@@ -220,8 +210,8 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
 
                                 Text(
                                     text = stringResource(id = R.string.get_shows_content),
-                                    //maxLines = 1,
-                                    //overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
                                     style = MaterialTheme.typography.titleSmall,
                                 )
                             }
@@ -244,6 +234,7 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                             if (isConnected(context)) {
                                 navController.navigate("myshows")
                             } else {
+                                Log.i("INTERNET", "No Connection - My Shows Card")
                                 openDialog.value = true
                             }
                         })) {
@@ -269,8 +260,8 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
 
                                 Text(
                                     text = stringResource(id = R.string.my_shows_content),
-                                    //maxLines = 1,
-                                    //overflow = TextOverflow.Ellipsis,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
                                     style = MaterialTheme.typography.titleSmall,
                                 )
                             }
@@ -278,6 +269,10 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                     }
                 }
             }
+
+        if(openDialog.value){
+            CustomDialog(openDialogCustom = openDialog, context)
+        }
     }
 }
 

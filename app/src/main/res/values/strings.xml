@@ -8,6 +8,6 @@
     <string name="noInternet">No connection</string>
     <string name="settings">SETTINGS</string>
     <string name="noInternetContent">You don\'t have connection on this mobile actually, please turn on WiFi or Mobile network in Settings to use this function</string>
-    <string name="get_shows_content">Click on this card to get all the shows presents</string>
+    <string name="get_shows_content">Click on this card to get all the shows present</string>
     <string name="my_shows_content">Click on this card to access randomly of 5 shows I like and pre-selected</string>
 </resources>
