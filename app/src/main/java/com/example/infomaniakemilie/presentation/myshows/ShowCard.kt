@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.infomaniakemilie.common.spannableStringToAnnotatedString
 import com.example.infomaniakemilie.domain.Show
+import com.example.infomaniakemilie.ui.theme.PurpleGrey80
 import java.util.Objects.toString
 
 @Composable
@@ -64,7 +66,10 @@ fun ShowCard(show: Show){
             .clickable(
                 onClick = { expanded = !expanded }
             ),
-        shape = RoundedCornerShape(7.dp)
+        shape = RoundedCornerShape(7.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = PurpleGrey80,
+        ),
     ) {
         Column (
             modifier = Modifier
@@ -159,7 +164,8 @@ fun ShowCard() {
         mediumImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
         largeImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
         rating = null,
-        averageRuntime = 25
+        averageRuntime = 25,
+        yearPremiered = "2023",
     )
 
     ShowCard(show)

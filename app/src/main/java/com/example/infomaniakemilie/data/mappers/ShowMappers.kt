@@ -6,6 +6,10 @@ import com.example.infomaniakemilie.domain.Show
 
 // For safeLet function, refer to Common file
 fun ShowDto.toShowEntity(): ShowEntity{
+    val year = premiered?.let {
+        it.take(4)
+    } ?: kotlin.run { null }
+
     return ShowEntity(
         id = id,
         name = name,
@@ -15,10 +19,15 @@ fun ShowDto.toShowEntity(): ShowEntity{
         largeImg = image?.original,
         rating = rating?.average,
         averageRuntime = averageRuntime,
+        premiered = year,
     )
 }
 
 fun ShowEntity.toShow(): Show {
+    val year = premiered?.let {
+        it.take(4)
+    } ?: kotlin.run { null }
+
     return Show(
         id = id,
         name = name,
@@ -28,10 +37,15 @@ fun ShowEntity.toShow(): Show {
         largeImage= largeImg ,
         rating = rating,
         averageRuntime = averageRuntime,
+        yearPremiered = year,
     )
 }
 
 fun ShowDto.toShow(): Show {
+    val year = premiered?.let {
+        it.take(4)
+    } ?: kotlin.run { null }
+
     return Show(
         id = id,
         name = name,
@@ -41,5 +55,6 @@ fun ShowDto.toShow(): Show {
         largeImage = image?.original,
         rating = rating?.average,
         averageRuntime = averageRuntime,
-        )
+        yearPremiered = year,
+    )
 }

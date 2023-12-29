@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -57,9 +58,11 @@ import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
 import com.example.infomaniakemilie.presentation.allshows.ShowScreen
 import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
+import com.example.infomaniakemilie.ui.theme.BlueLight
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import com.example.infomaniakemilie.ui.theme.Pink80
 import com.example.infomaniakemilie.ui.theme.Purple80
+import com.example.infomaniakemilie.ui.theme.PurpleGrey80
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,7 +74,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = BlueLight
                 ) {
                     MainScreen(this)
                 }
@@ -114,7 +117,8 @@ fun DevCard() {
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .size(width = 240.dp, height = 100.dp)
+            .size(width = 240.dp, height = 100.dp),
+        colors = CardDefaults.cardColors(containerColor = PurpleGrey80)
     ){
         Row(
             modifier = Modifier.padding(all = 8.dp),
@@ -138,7 +142,7 @@ fun DevCard() {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    stringResource(id = R.string.welcome),
+                    stringResource(id = R.string.my_card_content),
                     fontSize = 11.sp
                 )
             }
@@ -151,7 +155,10 @@ fun DevCard() {
 private fun MainScreenLayout(navController: NavHostController, context: Context){
     val openDialog = remember { mutableStateOf(false) }
 
-    Scaffold{ contentPadding ->
+    Scaffold(
+        contentColor = Color.Black,
+        containerColor = BlueLight,
+        ){ contentPadding ->
             Column(
                 modifier = Modifier
                     .padding(contentPadding)

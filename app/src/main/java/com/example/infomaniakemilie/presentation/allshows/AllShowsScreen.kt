@@ -53,6 +53,7 @@ fun ShowScreen(
                             show = show,
                             modifier = Modifier.fillMaxWidth()
                         )
+
                         Divider(
                             color = Color.LightGray,
                             thickness = 1.dp,

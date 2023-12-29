@@ -15,4 +15,5 @@ data class ShowDto(
     val image: Image?,
     val rating: Average?,
     val averageRuntime: Int?,
+    val premiered: String?,
 )

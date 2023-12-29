@@ -82,6 +82,14 @@ fun ShowItem(
             } ?: run {
                 Text(text = "No Rating")
             }
+
+            Spacer(modifier = Modifier.width(13.dp))
+            show.yearPremiered?.let {
+                Text(
+                    text = show.yearPremiered,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -113,6 +121,7 @@ fun BeerItemPreview() {
                 largeImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
                 rating = null,
                 averageRuntime = 25,
+                yearPremiered = "2023"
             ),
             modifier = Modifier.fillMaxWidth()
         )

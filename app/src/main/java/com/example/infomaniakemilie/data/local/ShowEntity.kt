@@ -18,4 +18,5 @@ data class ShowEntity(
     val largeImg: String?,
     val rating: Double?,
     val averageRuntime: Int?,
+    val premiered: String?
 )
