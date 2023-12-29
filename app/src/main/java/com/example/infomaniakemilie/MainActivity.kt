@@ -5,38 +5,46 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,9 +57,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.infomaniakemilie.common.isConnected
 import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
 import com.example.infomaniakemilie.presentation.allshows.ShowScreen
-import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
+import com.example.infomaniakemilie.ui.theme.Pink80
+import com.example.infomaniakemilie.ui.theme.Purple80
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -142,10 +151,13 @@ fun DevCard() {
 @Composable
 private fun MainScreenLayout(navController: NavHostController, context: Context){
     val openDialog = remember { mutableStateOf(false) }
+    var searchText by remember { mutableStateOf("") }
 
-    Scaffold { contentPadding ->
+    Scaffold{ contentPadding ->
             Column(
-                modifier = Modifier.padding(contentPadding),
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = CenterHorizontally,
             ) {
@@ -154,39 +166,115 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
 
                 Spacer(modifier = Modifier.width(25.dp))
 
+                OutlinedTextField(
+                    value = searchText,
+                    onValueChange = { searchText = it },
+                    label = { Text("Rechercher") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = CenterHorizontally,
                 ) {
-                    Button (
-                        onClick = {
-                            if(isConnected(context)){
+
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 10.dp,
+                        ),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Purple80,
+                        ),
+                    ) {
+                        Column(modifier = Modifier.clickable(onClick = {
+                            if (isConnected(context)) {
                                 navController.navigate("allshows")
-                            }else {
+                            } else {
                                 openDialog.value = true
                             }
+                        })) {
+
+                            Image(
+                                painter = painterResource(R.drawable.mandalorian),
+                                contentDescription = null, // decorative
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .height(150.dp)
+                                    .fillMaxWidth()
+                            )
+
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = stringResource(id = R.string.get_all_shows),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+
+                                Spacer(modifier = Modifier.height(5.dp))
+
+                                Text(
+                                    text = stringResource(id = R.string.get_shows_content),
+                                    //maxLines = 1,
+                                    //overflow = TextOverflow.Ellipsis,
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                            }
                         }
-                    ) {
-                        Text(text = stringResource(id = R.string.get_all_shows))
                     }
 
                     Spacer(modifier = Modifier.width(6.dp))
 
-                    Button (
-                        onClick = {
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 10.dp,
+                        ),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Pink80,
+                        ),
+                    ) {
+                        Column(modifier = Modifier.clickable(onClick = {
                             if (isConnected(context)) {
                                 navController.navigate("myshows")
                             } else {
                                 openDialog.value = true
                             }
-                        }
-                    ) {
-                        Text(text = stringResource(id = R.string.myshows))
-                    }
+                        })) {
 
-                    if(openDialog.value){
-                        CustomDialog(openDialogCustom = openDialog, context)
+                            Image(
+                                painter = painterResource(R.drawable.maomao),
+                                contentDescription = null, // decorative
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .height(150.dp)
+                                    .fillMaxWidth()
+                            )
+
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = stringResource(id = R.string.my_shows),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+
+                                Spacer(modifier = Modifier.height(5.dp))
+
+                                Text(
+                                    text = stringResource(id = R.string.my_shows_content),
+                                    //maxLines = 1,
+                                    //overflow = TextOverflow.Ellipsis,
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -195,7 +283,7 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ShowAllTheShowsScreen(navController: NavHostController){
+fun ShowAllTheShowsScreen(navController: NavHostController){
     val viewModel = hiltViewModel<AllShowViewModel>()
     val shows = viewModel.showPagingFlow.collectAsLazyPagingItems()
     Scaffold(
@@ -224,7 +312,7 @@ private fun ShowAllTheShowsScreen(navController: NavHostController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ShowMyShowsScreen(navController: NavHostController){
+fun ShowMyShowsScreen(navController: NavHostController){
     Scaffold(
         topBar = {
             TopAppBar(
