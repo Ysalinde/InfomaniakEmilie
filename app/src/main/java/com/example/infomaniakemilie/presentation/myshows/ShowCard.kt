@@ -126,7 +126,7 @@ fun ShowCard(show: Show){
                     Column(modifier = Modifier.padding(16.dp)) {
                         show.rating?.let {
                             Text(
-                                text = "Rating: ${(it*10)} %",
+                                text = "Rating: ${(it*10).toInt()} %",
                                 style = MaterialTheme.typography.bodyMedium)
                         } ?: run {
                             Text(text = "No Rating found.")
@@ -159,6 +159,7 @@ fun ShowCard() {
         mediumImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
         largeImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
         rating = null,
+        averageRuntime = 25
     )
 
     ShowCard(show)

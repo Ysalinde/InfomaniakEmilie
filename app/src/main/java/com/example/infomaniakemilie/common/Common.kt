@@ -37,13 +37,3 @@ fun spannableStringToAnnotatedString(text: CharSequence): AnnotatedString {
         AnnotatedString(text.toString())
     }
 }
-
-/*
- * Choose a number (count) in a list
- */
-fun <T> List<T>.takeRandom(count: Int): List<T> {
-    require(count <= size) { "La taille spécifiée est supérieure à la taille de la liste." }
-
-    val shuffledList = shuffled()
-    return shuffledList.subList(0, count)
-}

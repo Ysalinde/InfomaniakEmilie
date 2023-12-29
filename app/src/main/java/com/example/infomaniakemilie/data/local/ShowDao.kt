@@ -16,7 +16,7 @@ interface ShowDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(show: ShowEntity)
 
-    @Query("SELECT * FROM ShowEntity")
+    @Query("SELECT * FROM ShowEntity ORDER BY name ASC")
     fun pagingSource(): PagingSource<Int, ShowEntity>
 
     @Query("DELETE FROM showentity")

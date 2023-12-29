@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.infomaniakemilie.common.listOfMyShowsId
@@ -15,6 +13,8 @@ import com.example.infomaniakemilie.data.mappers.toShowEntity
 import com.example.infomaniakemilie.data.remote.MazeApi
 import com.example.infomaniakemilie.domain.Show
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,8 +29,8 @@ class MyShowsViewModel @Inject constructor(
      * See Common.kt for the list
      */
     private var pickListShows : List<Int> = emptyList()
-    private val _showsList = MutableLiveData<List<Show>>(emptyList())
-    val myShowList : LiveData<List<Show>> get() = _showsList
+    private val _showsList = MutableStateFlow<List<Show>>(emptyList())
+    val myShowList : StateFlow<List<Show>> get() = _showsList
     var errorMessage: String by mutableStateOf("")
 
     fun getMyShowsById(){
@@ -45,16 +45,14 @@ class MyShowsViewModel @Inject constructor(
                 if(response.isSuccessful) {
                     val showDto = response.body()
                     showDto?.let {
-                        Log.i("RATING", "Average : ${showDto}")
                         showDb.dao.insert(it.toShowEntity())
                         listShow.add(it.toShow())
-                        _showsList.value = listShow
-                        Log.i("RATING", "Average : ${showDto.rating?.average}")
                     }
                 }
             }
+            _showsList.value = listShow
+            Log.i("MyShowsList", "My Shows: ${_showsList.value}")
         }
-
     }
 }
 

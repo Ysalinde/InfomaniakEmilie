@@ -8,4 +8,5 @@ data class Show(
     val mediumImage: String?,
     val largeImage: String?,
     val rating: Double?,
+    val averageRuntime: Int?
 )

@@ -14,4 +14,5 @@ data class ShowDto(
     val summary: String?,
     val image: Image?,
     val rating: Average?,
+    val averageRuntime: Int?,
 )

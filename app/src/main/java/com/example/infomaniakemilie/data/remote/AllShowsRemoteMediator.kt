@@ -42,10 +42,10 @@ class AllShowsRemoteMediator(
             )
 
             /*
-             * withTransaction est utilisé car on effectue plusieurs insertions dans la DB
-             * et on veut insérer seulement si la transaction est réussie
-             * Si cela échoue, "upsertAll" ne permettra pas d'insertion et le if assure que la
-             * DB est bien vide
+             * withTransaction is used beacause we insert a lot of data simultaneous
+             * and we want to insert only when the transaction is successful
+             * If it is not, "upsertAll" will not permit the insertion and the "if" will assure
+             * that the DB is empty.
              */
             showDb.withTransaction {
                 if(loadType == LoadType.REFRESH){

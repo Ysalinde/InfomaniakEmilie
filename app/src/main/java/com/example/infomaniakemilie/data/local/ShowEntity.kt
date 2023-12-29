@@ -17,4 +17,5 @@ data class ShowEntity(
     val mediumImg: String?,
     val largeImg: String?,
     val rating: Double?,
+    val averageRuntime: Int?,
 )

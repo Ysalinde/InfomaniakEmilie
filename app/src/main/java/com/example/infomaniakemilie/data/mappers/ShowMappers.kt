@@ -13,7 +13,8 @@ fun ShowDto.toShowEntity(): ShowEntity{
         summary = summary,
         mediumImg = image?.medium,
         largeImg = image?.original,
-        rating = rating?.average
+        rating = rating?.average,
+        averageRuntime = averageRuntime,
     )
 }
 
@@ -26,6 +27,7 @@ fun ShowEntity.toShow(): Show {
         mediumImage = mediumImg ,
         largeImage= largeImg ,
         rating = rating,
+        averageRuntime = averageRuntime,
     )
 }
 
@@ -38,5 +40,6 @@ fun ShowDto.toShow(): Show {
         mediumImage = image?.medium,
         largeImage = image?.original,
         rating = rating?.average,
+        averageRuntime = averageRuntime,
         )
 }

@@ -51,7 +51,6 @@ import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
 import com.example.infomaniakemilie.presentation.allshows.ShowScreen
 import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
-import com.example.infomaniakemilie.presentation.myshows.MyShowsViewModel
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -226,9 +225,6 @@ private fun ShowAllTheShowsScreen(navController: NavHostController){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ShowMyShowsScreen(navController: NavHostController){
-    val viewModel = hiltViewModel<MyShowsViewModel>()
-    viewModel.getMyShowsById()
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -247,11 +243,8 @@ private fun ShowMyShowsScreen(navController: NavHostController){
         },
     ){ contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
-            viewModel.myShowList.value?.let {
-                MyShowsScreen(it, viewModel.errorMessage)
-            }
+            MyShowsScreen()
         }
-
     }
 }
 
