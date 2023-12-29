@@ -1,5 +1,6 @@
 package com.example.infomaniakemilie.presentation.myshows
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -44,9 +45,11 @@ class MyShowsViewModel @Inject constructor(
                 if(response.isSuccessful) {
                     val showDto = response.body()
                     showDto?.let {
+                        Log.i("RATING", "Average : ${showDto}")
                         showDb.dao.insert(it.toShowEntity())
                         listShow.add(it.toShow())
                         _showsList.value = listShow
+                        Log.i("RATING", "Average : ${showDto.rating?.average}")
                     }
                 }
             }

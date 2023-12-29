@@ -9,9 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -26,11 +28,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -72,12 +74,24 @@ fun ShowCard(show: Show){
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                if(!expanded){
+                    val img = show.mediumImage?.let { it }?: run { "" }
+                    AsyncImage(
+                        model = img,
+                        contentDescription = show.name,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(50.dp)
+                    )
+                }
+
                 Text(
                     text = show.name,
                     modifier = Modifier
                         .padding(16.dp)
                         .weight(6f),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                 )
 
@@ -105,16 +119,18 @@ fun ShowCard(show: Show){
                         contentDescription = show.name,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .height(150.dp)
-                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .width(200.dp).align(CenterHorizontally),
                     )
+
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = show.name,
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            )
+                        show.rating?.let {
+                            Text(
+                                text = "Rating: ${(it*10)} %",
+                                style = MaterialTheme.typography.bodyMedium)
+                        } ?: run {
+                            Text(text = "No Rating found.")
+                        }
 
                         Spacer(modifier = Modifier.height(5.dp))
 

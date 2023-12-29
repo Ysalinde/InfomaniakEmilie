@@ -12,5 +12,5 @@ data class Image(
  * Data class to access to the rating
  */
 data class Average(
-    val note: Double?,
+    val average: Double?,
 )
