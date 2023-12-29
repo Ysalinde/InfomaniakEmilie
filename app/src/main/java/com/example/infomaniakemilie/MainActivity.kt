@@ -1,20 +1,15 @@
 package com.example.infomaniakemilie
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,20 +25,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,11 +49,11 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.infomaniakemilie.common.isConnected
 import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
 import com.example.infomaniakemilie.presentation.allshows.ShowScreen
+import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
 import com.example.infomaniakemilie.presentation.myshows.MyShowsViewModel
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -151,14 +142,9 @@ fun DevCard() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MainScreenLayout(navController: NavHostController, context: Context){
-    val snackbarState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    val openDialog = remember { mutableStateOf(false) }
 
-    Scaffold (
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarState)},
-        ) { contentPadding ->
-
+    Scaffold { contentPadding ->
             Column(
                 modifier = Modifier.padding(contentPadding),
                 verticalArrangement = Arrangement.Top,
@@ -176,14 +162,11 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                 ) {
                     Button (
                         onClick = {
-                            scope.launch {
-                                if(isConnected(context)){
-                                    navController.navigate("allshows")
-                                }else{
-                                    snackbarState.showSnackbar(message = "")
-                                }
+                            if(isConnected(context)){
+                                navController.navigate("allshows")
+                            }else {
+                                openDialog.value = true
                             }
-
                         }
                     ) {
                         Text(text = stringResource(id = R.string.get_all_shows))
@@ -193,57 +176,23 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
 
                     Button (
                         onClick = {
-                            scope.launch {
-                                if (isConnected(context)) {
-                                    navController.navigate("myshows")
-                                } else {
-                                    snackbarState.showSnackbar(message = "",)
-                                }
+                            if (isConnected(context)) {
+                                navController.navigate("myshows")
+                            } else {
+                                openDialog.value = true
                             }
                         }
                     ) {
                         Text(text = stringResource(id = R.string.myshows))
                     }
 
-                    SnackbarHost(
-                        hostState = snackbarState,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
-                        snackbar = {
-                            Snackbar(
-                                modifier = Modifier,
-
-                                containerColor = Color.Black,
-                            ) {
-                                Row{
-                                    Text(
-                                        text = stringResource(id = R.string.noInternet)
-                                    )
-
-                                    Spacer(modifier = Modifier.padding(horizontal = 14.dp))
-
-                                    Text(
-                                        text = stringResource(id = R.string.settings),
-                                        modifier = Modifier
-                                            .padding(end = 5.dp)
-                                            .clickable(
-                                                interactionSource = MutableInteractionSource(),
-                                                indication = null,
-                                                onClick = {
-                                                    context.startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
-                                                }
-                                            )
-                                    )
-                                }
-                            }
-                        }
-                    )
+                    if(openDialog.value){
+                        CustomDialog(openDialogCustom = openDialog, context)
+                    }
                 }
             }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
