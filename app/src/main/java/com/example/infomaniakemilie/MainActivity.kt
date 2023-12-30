@@ -112,7 +112,7 @@ fun NavGraph(navController: NavHostController, context: Context){
             ShowMyShowsScreen(navController)
         }
         composable(route = "research"){
-            ShowResearch(navController)
+            ShowResearch(navController, context)
         }
     }
 }

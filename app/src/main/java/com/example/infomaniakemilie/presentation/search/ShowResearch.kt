@@ -1,5 +1,7 @@
 package com.example.infomaniakemilie.presentation.search
 
+import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,17 +32,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.infomaniakemilie.R
+import com.example.infomaniakemilie.common.isConnected
 import com.example.infomaniakemilie.presentation.allshows.ShowItem
+import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.ui.theme.BlueLight
 import com.example.infomaniakemilie.ui.theme.BlueMedium
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShowResearch(navController: NavHostController){
+fun ShowResearch(navController: NavHostController, context: Context){
     val viewModel = hiltViewModel<ShowResearchViewModel>()
     val searchResults by viewModel.searchResults.observeAsState()
     var searchText by remember { mutableStateOf("") }
+    val openDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         containerColor = BlueLight,
@@ -71,8 +76,13 @@ fun ShowResearch(navController: NavHostController){
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 4.dp),
                 onValueChange = {
-                    searchText = it
-                    viewModel.searchShows(it)
+                    if(isConnected(context)){
+                        searchText = it
+                        viewModel.searchShows(it)
+                    }
+                    else{
+                        openDialog.value = true
+                    }
                 },
             )
 
@@ -88,7 +98,9 @@ fun ShowResearch(navController: NavHostController){
                 }
             }
 
-
+            if(openDialog.value){
+                CustomDialog(openDialogCustom = openDialog, context)
+            }
         }
 
     }
@@ -97,7 +109,8 @@ fun ShowResearch(navController: NavHostController){
 @Preview
 @Composable
 private fun ShowResearchPreview(){
+    val context = ComponentActivity()
     InfomaniakEmilieTheme {
-        ShowResearch(rememberNavController())
+        ShowResearch(rememberNavController(), context)
     }
 }

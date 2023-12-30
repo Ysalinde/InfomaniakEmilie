@@ -94,10 +94,13 @@ fun ShowItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        Text(
-            text = "${show.averageRuntime} min",
-            modifier = Modifier.align(CenterVertically)
-        )
+        show.averageRuntime?.let {
+            Text(
+                text = "${show.averageRuntime} min",
+                modifier = Modifier.align(CenterVertically)
+            )
+        }
+
     }
 }
 
