@@ -36,6 +36,9 @@ interface MazeApi {
     @GET("/shows/{id}")
     suspend fun getShowById(@Path("id") showId: Int): Response<ShowDto>
 
+    @GET("/search/shows")
+    suspend fun getSearchByValue(@Query("q") query: String): Response<List<SearchResultDto>>
+
     companion object {
         const val BASE_URL = "https://api.tvmaze.com/"
     }
