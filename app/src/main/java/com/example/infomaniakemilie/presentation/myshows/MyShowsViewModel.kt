@@ -1,6 +1,5 @@
 package com.example.infomaniakemilie.presentation.myshows
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -51,7 +50,6 @@ class MyShowsViewModel @Inject constructor(
                 }
             }
             _showsList.value = listShow
-            Log.i("MyShowsList", "My Shows: ${_showsList.value}")
         }
     }
 }

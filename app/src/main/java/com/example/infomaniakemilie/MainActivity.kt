@@ -2,7 +2,6 @@ package com.example.infomaniakemilie
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -21,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -32,11 +32,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -58,7 +60,10 @@ import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
 import com.example.infomaniakemilie.presentation.allshows.ShowScreen
 import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
+import com.example.infomaniakemilie.presentation.search.ShowResearch
+import com.example.infomaniakemilie.ui.theme.BlueDarker
 import com.example.infomaniakemilie.ui.theme.BlueLight
+import com.example.infomaniakemilie.ui.theme.BlueMedium
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import com.example.infomaniakemilie.ui.theme.Pink80
 import com.example.infomaniakemilie.ui.theme.Purple80
@@ -100,12 +105,14 @@ fun NavGraph(navController: NavHostController, context: Context){
         composable(route = "homepage"){
             MainScreenLayout(navController, context)
         }
-
         composable(route = "allshows"){
             ShowAllTheShowsScreen(navController)
         }
         composable(route = "myshows"){
             ShowMyShowsScreen(navController)
+        }
+        composable(route = "research"){
+            ShowResearch(navController)
         }
     }
 }
@@ -177,6 +184,24 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                     horizontalAlignment = CenterHorizontally,
                 ) {
 
+                    IconButton(
+                        onClick = {
+                            if (isConnected(context)) {
+                                navController.navigate("research")
+                            } else {
+                                openDialog.value = true
+                            }},
+                        modifier = Modifier.align(End)) {
+                        Icon(
+                            Icons.Filled.Search,
+                            contentDescription = "Magnifier",
+                            tint = BlueDarker,
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
                     Card(
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
@@ -191,7 +216,6 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                             if (isConnected(context)) {
                                 navController.navigate("allshows")
                             } else {
-                                Log.i("INTERNET", "No Connection - Get Shows Card")
                                 openDialog.value = true
                             }
                         })) {
@@ -241,7 +265,6 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                             if (isConnected(context)) {
                                 navController.navigate("myshows")
                             } else {
-                                Log.i("INTERNET", "No Connection - My Shows Card")
                                 openDialog.value = true
                             }
                         })) {
@@ -289,11 +312,13 @@ fun ShowAllTheShowsScreen(navController: NavHostController){
     val viewModel = hiltViewModel<AllShowViewModel>()
     val shows = viewModel.showPagingFlow.collectAsLazyPagingItems()
     Scaffold(
+        containerColor = BlueLight,
         topBar = {
             TopAppBar(
                 title = {
                     Text(text = stringResource(id = R.string.back))
                 },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BlueMedium),
                 navigationIcon = {
                     IconButton(onClick = {navController.navigate("homepage")}) {
                         Icon(
@@ -316,11 +341,13 @@ fun ShowAllTheShowsScreen(navController: NavHostController){
 @Composable
 fun ShowMyShowsScreen(navController: NavHostController){
     Scaffold(
+        containerColor = BlueLight,
         topBar = {
             TopAppBar(
                 title = {
                     Text(text = stringResource(id = R.string.back))
                 },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BlueMedium),
                 navigationIcon = {
                     IconButton(onClick = {navController.navigate("homepage")}) {
                         Icon(

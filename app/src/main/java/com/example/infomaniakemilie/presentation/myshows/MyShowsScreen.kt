@@ -1,7 +1,6 @@
 package com.example.infomaniakemilie.presentation.myshows
 
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -22,7 +21,6 @@ fun MyShowsScreen(){
 
     LaunchedEffect(true) {
         viewModel.getMyShowsById()
-        Log.i("MyShowsList", "My Shows: ${viewModel.myShowList.value}")
     }
 
     myShowsState?.let {value ->

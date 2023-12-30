@@ -42,6 +42,7 @@ fun ShowEntity.toShow(): Show {
 }
 
 fun ShowDto.toShow(): Show {
+
     val year = premiered?.let {
         it.take(4)
     } ?: kotlin.run { null }
@@ -56,5 +57,5 @@ fun ShowDto.toShow(): Show {
         rating = rating?.average,
         averageRuntime = averageRuntime,
         yearPremiered = year,
-    )
+        )
 }
