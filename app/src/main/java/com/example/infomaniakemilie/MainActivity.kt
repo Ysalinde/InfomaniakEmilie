@@ -16,14 +16,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,8 +28,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,34 +35,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.navigation.navArgument
 import com.example.infomaniakemilie.common.isConnected
-import com.example.infomaniakemilie.presentation.allshows.AllShowViewModel
-import com.example.infomaniakemilie.presentation.allshows.ShowScreen
+import com.example.infomaniakemilie.presentation.cards.DevCard
 import com.example.infomaniakemilie.presentation.dialog.CustomDialog
-import com.example.infomaniakemilie.presentation.myshows.MyShowsScreen
+import com.example.infomaniakemilie.presentation.episodes.ShowEpisodesScreen
+import com.example.infomaniakemilie.presentation.myshows.DisplayMyShows
+import com.example.infomaniakemilie.presentation.pagershows.DisplayPagerShows
 import com.example.infomaniakemilie.presentation.search.ShowResearch
+import com.example.infomaniakemilie.presentation.season.ShowSeasonScreen
 import com.example.infomaniakemilie.ui.theme.BlueDarker
 import com.example.infomaniakemilie.ui.theme.BlueLight
 import com.example.infomaniakemilie.ui.theme.BlueMedium
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import com.example.infomaniakemilie.ui.theme.Pink80
 import com.example.infomaniakemilie.ui.theme.Purple80
-import com.example.infomaniakemilie.ui.theme.PurpleGrey80
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -105,54 +100,26 @@ fun NavGraph(navController: NavHostController, context: Context){
         composable(route = "homepage"){
             MainScreenLayout(navController, context)
         }
-        composable(route = "allshows"){
-            ShowAllTheShowsScreen(navController)
+        composable(route = "pagershows"){
+            DisplayPagerShows(navController, context)
         }
         composable(route = "myshows"){
-            ShowMyShowsScreen(navController)
+            DisplayMyShows(navController)
         }
         composable(route = "research"){
             ShowResearch(navController, context)
         }
-    }
-}
-
-@Composable
-fun DevCard() {
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        modifier = Modifier
-            .size(width = 240.dp, height = 100.dp),
-        colors = CardDefaults.cardColors(containerColor = PurpleGrey80)
-    ){
-        Row(
-            modifier = Modifier.padding(all = 8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.emilie),
-                contentDescription = "Contact profile picture",
-                modifier = Modifier
-                    // Set image size to 100 dp
-                    .size(100.dp)
-                    // Clip image to be shaped as a circle
-                    .clip(CircleShape)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Column(verticalArrangement = Arrangement.SpaceAround) {
-                Text(stringResource(
-                    id = R.string.dev_name),
-                    fontSize = 16.sp,
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    stringResource(id = R.string.my_card_content),
-                    fontSize = 11.sp
-                )
-            }
+        composable(
+            route = "show/{showId}",
+            arguments = listOf(navArgument("showId") { type = NavType.IntType })
+        ){
+            ShowSeasonScreen(navController, context)
+        }
+        composable(
+            route = "season/{seasonId}",
+            arguments = listOf(navArgument("seasonId") { type = NavType.IntType })
+        ){
+            ShowEpisodesScreen(navController)
         }
     }
 }
@@ -184,21 +151,34 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                     horizontalAlignment = CenterHorizontally,
                 ) {
 
-                    IconButton(
-                        onClick = {
-                            if (isConnected(context)) {
-                                navController.navigate("research")
-                            } else {
-                                openDialog.value = true
-                            }},
-                        modifier = Modifier.align(End)) {
-                        Icon(
-                            Icons.Filled.Search,
-                            contentDescription = "Magnifier",
-                            tint = BlueDarker,
-                            modifier = Modifier.size(48.dp)
+                    Row(modifier = Modifier.align(End)){
+
+                        Text(
+                            text = stringResource(id = R.string.search),
+                            textAlign = TextAlign.End,
+                            color = BlueMedium,
+                            modifier = Modifier.align(
+                                Alignment.CenterVertically
+                            ),
                         )
+
+                        IconButton(
+                            onClick = {
+                                if (isConnected(context)) {
+                                    navController.navigate("research")
+                                } else {
+                                    openDialog.value = true
+                                }},
+                            ) {
+                            Icon(
+                                Icons.Filled.Search,
+                                contentDescription = "Magnifier",
+                                tint = BlueDarker,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
                     }
+
 
                     Spacer(modifier = Modifier.width(6.dp))
 
@@ -214,7 +194,7 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
                     ) {
                         Column(modifier = Modifier.clickable(onClick = {
                             if (isConnected(context)) {
-                                navController.navigate("allshows")
+                                navController.navigate("pagershows")
                             } else {
                                 openDialog.value = true
                             }
@@ -304,73 +284,6 @@ private fun MainScreenLayout(navController: NavHostController, context: Context)
             CustomDialog(openDialogCustom = openDialog, context)
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ShowAllTheShowsScreen(navController: NavHostController){
-    val viewModel = hiltViewModel<AllShowViewModel>()
-    val shows = viewModel.showPagingFlow.collectAsLazyPagingItems()
-    Scaffold(
-        containerColor = BlueLight,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.back))
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BlueMedium),
-                navigationIcon = {
-                    IconButton(onClick = {navController.navigate("homepage")}) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
-        },
-    ){ contentPadding ->
-        Column(modifier = Modifier.padding(contentPadding)) {
-            ShowScreen(shows = shows)
-        }
-
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ShowMyShowsScreen(navController: NavHostController){
-    Scaffold(
-        containerColor = BlueLight,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.back))
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = BlueMedium),
-                navigationIcon = {
-                    IconButton(onClick = {navController.navigate("homepage")}) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
-        },
-    ){ contentPadding ->
-        Column(modifier = Modifier.padding(contentPadding)) {
-            MyShowsScreen()
-        }
-    }
-}
-
-
-// PREVIEW PART
-@Preview
-@Composable
-fun DevCardPreview(){
-    DevCard()
 }
 
 @Preview(showBackground = true)

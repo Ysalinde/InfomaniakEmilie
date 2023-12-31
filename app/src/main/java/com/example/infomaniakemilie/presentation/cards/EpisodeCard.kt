@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation.myshows
+package com.example.infomaniakemilie.presentation.cards
 
 import android.text.Html
 import androidx.compose.animation.animateContentSize
@@ -29,29 +29,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.infomaniakemilie.common.spannableStringToAnnotatedString
-import com.example.infomaniakemilie.domain.Show
+import com.example.infomaniakemilie.domain.Episode
 import com.example.infomaniakemilie.ui.theme.PurpleGrey80
-import java.util.Objects.toString
+import java.util.Objects
 
 @Composable
-fun ShowCard(show: Show){
-    // Variable to remember the actual state of the card
+fun EpisodeCard(episode: Episode){
+
     var expanded by remember { mutableStateOf (false) }
     val rotationState by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f
     )
-
-    val annotatedSummary = Html.fromHtml(show.summary, Html.FROM_HTML_MODE_COMPACT)
-    val summary = spannableStringToAnnotatedString(annotatedSummary)
 
     Card (
         modifier = Modifier
@@ -70,29 +65,24 @@ fun ShowCard(show: Show){
         colors = CardDefaults.cardColors(
             containerColor = PurpleGrey80,
         ),
-    ) {
+    ){
         Column (
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp)
         ){
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
-            ) {
-                if(!expanded){
-                    val img = show.mediumImage?.let { it }?: run { "" }
-                    AsyncImage(
-                        model = img,
-                        contentDescription = show.name,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(50.dp)
-                    )
-                }
+            ){
+               val title = if (episode.name.isNullOrBlank()){
+                        "${episode.number}. No Title"
+                    } else {
+                        "${episode.number}. ${episode.name}"
+                    }
 
                 Text(
-                    text = show.name,
+                    text = title,
                     modifier = Modifier
                         .padding(16.dp)
                         .weight(6f),
@@ -108,65 +98,36 @@ fun ShowCard(show: Show){
                     onClick = {
                         expanded = !expanded
                     }){
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Drop-Down Arrow"
-                        )
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Drop-Down Arrow"
+                    )
                 }
             }
 
-            // Expanded part of the card
             if(expanded){
+                val annotatedSummary = Html.fromHtml(episode.summary, Html.FROM_HTML_MODE_COMPACT)
+                val summary = spannableStringToAnnotatedString(annotatedSummary)
+
                 Column {
-                    val img = show.largeImage?.let { it }?: run { "" }
+                    val img = episode.largeImg?.let { it } ?: run { "" }
                     AsyncImage(
                         model = img,
-                        contentDescription = show.name,
+                        contentDescription = episode.name,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxHeight()
-                            .width(200.dp).align(CenterHorizontally),
+                            .width(200.dp).align(Alignment.CenterHorizontally),
                     )
 
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        show.rating?.let {
-                            Text(
-                                text = "Rating: ${(it*10).toInt()} %",
-                                style = MaterialTheme.typography.bodyMedium)
-                        } ?: run {
-                            Text(text = "No Rating found.")
-                        }
+                    Spacer(modifier = Modifier.height(5.dp))
 
-                        Spacer(modifier = Modifier.height(5.dp))
-
-                        Text(
-                            text = toString(summary),
-                            style = MaterialTheme.typography.titleSmall,
-                            )
-                    }
+                    Text(
+                        text = Objects.toString(summary),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
                 }
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun ShowCard() {
-    val text ="<p>The single-camera series that mixes live-action and animation stars Jacob Bertrand as the title character. <b>Kirby Buckets</b> introduces viewers to the vivid imagination of charismatic 13-year-old Kirby Buckets, who dreams of becoming a famous animator like his idol, Mac MacCallister. With his two best friends, Fish and Eli, by his side, Kirby navigates his eccentric town of Forest Hills where the trio usually find themselves trying to get out of a predicament before Kirby's sister, Dawn, and her best friend, Belinda, catch them. Along the way, Kirby is joined by his animated characters, each with their own vibrant personality that only he and viewers can see.</p>\""
-    val annotatedSummary = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
-    val summary = spannableStringToAnnotatedString(annotatedSummary)
-    val show = Show(
-        id = 1,
-        name = "Kirby Buckets",
-        language = "English",
-        summary = toString(summary),
-        mediumImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
-        largeImage = "https://static.tvmaze.com/uploads/images/medium_portrait/1/4600.jpg",
-        rating = null,
-        averageRuntime = 25,
-        yearPremiered = "2023",
-    )
-
-    ShowCard(show)
 }

@@ -5,8 +5,10 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.room.Room
+import com.example.infomaniakemilie.data.local.EpisodeDatabase
+import com.example.infomaniakemilie.data.local.SeasonDatabase
 import com.example.infomaniakemilie.data.local.ShowDatabase
-import com.example.infomaniakemilie.data.local.ShowEntity
+import com.example.infomaniakemilie.data.local.entity.ShowEntity
 import com.example.infomaniakemilie.data.remote.AllShowsRemoteMediator
 import com.example.infomaniakemilie.data.remote.MazeApi
 import dagger.Module
@@ -34,6 +36,25 @@ object AppModule {
         ).build()
     }
 
+    @Provides
+    @Singleton
+    fun provideSeasonDatabase(@ApplicationContext context: Context) : SeasonDatabase{
+        return Room.databaseBuilder(
+            context,
+            SeasonDatabase::class.java,
+            "seasons.db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEpisodeDatabase(@ApplicationContext context: Context) : EpisodeDatabase{
+        return Room.databaseBuilder(
+            context,
+            EpisodeDatabase::class.java,
+            "episodes.db"
+        ).build()
+    }
 
     @Provides
     @Singleton

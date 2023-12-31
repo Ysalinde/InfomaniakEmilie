@@ -1,6 +1,5 @@
 package com.example.infomaniakemilie.presentation.search
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -47,7 +46,6 @@ class ShowResearchViewModel @Inject constructor(
                             )
                         }
                     }
-                    Log.i("SearchList", "My Shows: ${_searchResults.value}")
                 }
 
             } catch (e: Exception){

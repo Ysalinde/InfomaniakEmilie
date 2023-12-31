@@ -2,13 +2,16 @@
     <string name="app_name">InfomaniakEmilie</string>
     <string name="my_card_content">Welcome on my tech test !</string>
     <string name="dev_name">Emilie Galland</string>
-    <string name="get_all_shows">Get Shows</string>
+    <string name="get_all_shows">This is the way</string>
     <string name="back">back</string>
     <string name="my_shows">What do I like ?</string>
     <string name="noInternet">No connection</string>
     <string name="settings">SETTINGS</string>
     <string name="noInternetContent">You don\'t have connection on this mobile actually, please turn on WiFi or Mobile network in Settings to use this function</string>
-    <string name="get_shows_content">Click on this card to get all the shows present</string>
+    <string name="get_shows_content">Click on this card to acces on the shows</string>
     <string name="my_shows_content">Click on this card to access randomly of 5 shows I like and pre-selected</string>
     <string name="quick_research">Quick reserach ?</string>
+    <string name="search">Looking for something ?</string>
+    <string name="no_summary">There is no summary for this season.</string>
+    <string name="list_episodes">Episodes</string>
 </resources>

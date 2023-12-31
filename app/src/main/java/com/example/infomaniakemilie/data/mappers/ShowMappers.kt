@@ -1,11 +1,10 @@
 package com.example.infomaniakemilie.data.mappers
 
-import com.example.infomaniakemilie.data.local.ShowEntity
-import com.example.infomaniakemilie.data.remote.ShowDto
+import com.example.infomaniakemilie.data.local.entity.ShowEntity
+import com.example.infomaniakemilie.data.remote.dto.ShowDto
 import com.example.infomaniakemilie.domain.Show
 
-// For safeLet function, refer to Common file
-fun ShowDto.toShowEntity(): ShowEntity{
+fun ShowDto.toShowEntity(): ShowEntity {
     val year = premiered?.let {
         it.take(4)
     } ?: kotlin.run { null }
@@ -24,10 +23,6 @@ fun ShowDto.toShowEntity(): ShowEntity{
 }
 
 fun ShowEntity.toShow(): Show {
-    val year = premiered?.let {
-        it.take(4)
-    } ?: kotlin.run { null }
-
     return Show(
         id = id,
         name = name,
@@ -37,7 +32,7 @@ fun ShowEntity.toShow(): Show {
         largeImage= largeImg ,
         rating = rating,
         averageRuntime = averageRuntime,
-        yearPremiered = year,
+        yearPremiered = premiered,
     )
 }
 

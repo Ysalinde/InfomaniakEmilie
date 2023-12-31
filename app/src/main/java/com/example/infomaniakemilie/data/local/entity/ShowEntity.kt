@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.data.local
+package com.example.infomaniakemilie.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

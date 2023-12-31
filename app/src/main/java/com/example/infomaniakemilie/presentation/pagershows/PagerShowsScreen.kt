@@ -1,10 +1,11 @@
-package com.example.infomaniakemilie.presentation.allshows
+package com.example.infomaniakemilie.presentation.pagershows
 
+import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -16,20 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.infomaniakemilie.domain.Show
+import com.example.infomaniakemilie.presentation.cards.ShowItem
 
 @Composable
 fun ShowScreen(
-    shows: LazyPagingItems<Show>
+    shows: LazyPagingItems<Show>,
+    navController: NavHostController,
+    contextApp: Context
 ) {
-    val context = LocalContext.current
+    val contextLocal = LocalContext.current
     LaunchedEffect(key1 = shows.loadState) {
         if(shows.loadState.refresh is LoadState.Error) {
             Toast.makeText(
-                context,
+                contextLocal,
                 "Error: " + (shows.loadState.refresh as LoadState.Error).error.message,
                 Toast.LENGTH_LONG
             ).show()
@@ -43,7 +48,7 @@ fun ShowScreen(
             )
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().background(color = Color.Transparent),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -51,7 +56,8 @@ fun ShowScreen(
                     if(show != null) {
                         ShowItem(
                             show = show,
-                            modifier = Modifier.fillMaxWidth()
+                            navController,
+                            contextApp
                         )
 
                         Divider(

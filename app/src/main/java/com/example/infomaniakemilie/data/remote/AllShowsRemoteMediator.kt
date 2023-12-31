@@ -6,7 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.infomaniakemilie.data.local.ShowDatabase
-import com.example.infomaniakemilie.data.local.ShowEntity
+import com.example.infomaniakemilie.data.local.entity.ShowEntity
 import com.example.infomaniakemilie.data.mappers.toShowEntity
 import retrofit2.HttpException
 import java.io.IOException

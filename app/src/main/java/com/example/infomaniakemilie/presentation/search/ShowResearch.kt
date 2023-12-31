@@ -33,7 +33,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.infomaniakemilie.R
 import com.example.infomaniakemilie.common.isConnected
-import com.example.infomaniakemilie.presentation.allshows.ShowItem
+import com.example.infomaniakemilie.presentation.cards.ShowItem
 import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.ui.theme.BlueLight
 import com.example.infomaniakemilie.ui.theme.BlueMedium
@@ -91,7 +91,9 @@ fun ShowResearch(navController: NavHostController, context: Context){
                     LazyColumn(modifier = Modifier.fillMaxHeight()) {
                         items(value) { show ->
                             ShowItem(
-                                show = show
+                                show = show,
+                                navController,
+                                context
                             )
                         }
                     }

@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.data.remote
+package com.example.infomaniakemilie.data.remote.dto
 
 import com.example.infomaniakemilie.common.Average
 import com.example.infomaniakemilie.common.Image
