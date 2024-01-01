@@ -2,6 +2,7 @@ package com.example.infomaniakemilie.presentation.pagershows
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.items
 import com.example.infomaniakemilie.domain.Show
 import com.example.infomaniakemilie.presentation.Common.ShowItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShowScreen(
     shows: LazyPagingItems<Show>,
@@ -31,6 +32,7 @@ fun ShowScreen(
     contextApp: Context
 ) {
     val contextLocal = LocalContext.current
+
     LaunchedEffect(key1 = shows.loadState) {
         if(shows.loadState.refresh is LoadState.Error) {
             Toast.makeText(
@@ -50,9 +52,10 @@ fun ShowScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize().background(color = Color.Transparent),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(shows) { show ->
+                items(shows.itemCount) {index  ->
+                    val show = shows[index]
                     if(show != null) {
                         ShowItem(
                             show = show,

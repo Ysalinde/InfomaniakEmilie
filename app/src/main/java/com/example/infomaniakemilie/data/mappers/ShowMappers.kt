@@ -4,6 +4,14 @@ import com.example.infomaniakemilie.data.local.entity.ShowEntity
 import com.example.infomaniakemilie.data.remote.dto.ShowDto
 import com.example.infomaniakemilie.domain.Show
 
+
+/*
+ * Mapper page for Show Datas
+ *
+ * 1. Dto -> Entity
+ * 2. Entity -> Object
+ * 3. Dto -> Object
+ */
 fun ShowDto.toShowEntity(): ShowEntity {
     val year = premiered?.let {
         it.take(4)

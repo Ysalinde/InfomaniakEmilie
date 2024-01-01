@@ -3,6 +3,10 @@ package com.example.infomaniakemilie.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/*
+ * EpisodeEntity - Entity
+ * Database structure of an episode of a show
+ */
 @Entity
 data class EpisodeEntity(
     @PrimaryKey

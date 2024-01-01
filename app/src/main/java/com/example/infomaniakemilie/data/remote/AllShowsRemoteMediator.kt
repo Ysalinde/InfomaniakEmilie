@@ -25,6 +25,8 @@ class AllShowsRemoteMediator(
         state: PagingState<Int, ShowEntity>
     ): MediatorResult {
         return try {
+
+            // LoadType has 3 differents states to implement :
             val loadkey = when(loadType) {
                 LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(
@@ -36,6 +38,7 @@ class AllShowsRemoteMediator(
                 }
             }
 
+            // we call the API here to get the shows
             val shows = mazeApi.getShows(
                 page = loadkey,
                 pageSize = state.config.pageSize

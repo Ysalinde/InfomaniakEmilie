@@ -6,6 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 
+/**
+ * DAO for Database of Episodes
+ */
 @Dao
 interface EpisodeDao {
 

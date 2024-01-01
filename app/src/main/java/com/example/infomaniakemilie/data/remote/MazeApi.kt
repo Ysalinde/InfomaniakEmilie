@@ -1,6 +1,7 @@
 package com.example.infomaniakemilie.data.remote
 
 import com.example.infomaniakemilie.data.remote.dto.EpisodeDto
+import com.example.infomaniakemilie.data.remote.dto.SearchResultDto
 import com.example.infomaniakemilie.data.remote.dto.SeasonDto
 import com.example.infomaniakemilie.data.remote.dto.ShowDto
 import retrofit2.Response

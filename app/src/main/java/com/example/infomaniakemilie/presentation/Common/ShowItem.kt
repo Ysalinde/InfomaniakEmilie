@@ -74,6 +74,7 @@ fun ShowItem(
                     vertical = 3.dp
                 )
         ) {
+
             AsyncImage(
                 model = show.largeImage,
                 contentDescription = show.name,

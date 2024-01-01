@@ -4,6 +4,14 @@ import com.example.infomaniakemilie.data.local.entity.EpisodeEntity
 import com.example.infomaniakemilie.data.remote.dto.EpisodeDto
 import com.example.infomaniakemilie.domain.Episode
 
+/*
+ * Mapper page for Episode Datas
+ *
+ * 1. Dto -> Entity
+ * 2. Entity -> Object
+ * 3. Dto -> Object
+ */
+
 fun EpisodeDto.toEpisodeEntity(): EpisodeEntity{
     return EpisodeEntity(
         id = id,

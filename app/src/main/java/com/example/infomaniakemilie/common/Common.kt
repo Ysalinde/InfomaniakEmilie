@@ -10,10 +10,11 @@ import androidx.compose.ui.text.style.TextDecoration
 
 // Selection of shows I like
 val listOfMyShowsId = listOf(67017, 41007, 6577, 2993, 37675, 55138, 170, 63236, 60169, 36196,
-    36505, 59755, 64352, 35951, 38963, 28276, 28717, 31568, 1939, 8244, 69956, 63451, 65876)
+    36505, 59755, 64352, 35951, 38963, 28276, 28717, 31568, 1939, 8244, 69956, 63451, 65876, 184,
+    25242, 59698, 42966)
 
 /*
- * Function shameless took from : https://issuetracker.google.com/issues/139320238?pli=1
+ * Function I shamelessly took from : https://issuetracker.google.com/issues/139320238?pli=1
  */
 fun spannableStringToAnnotatedString(text: CharSequence): AnnotatedString {
     return if (text is Spanned) {

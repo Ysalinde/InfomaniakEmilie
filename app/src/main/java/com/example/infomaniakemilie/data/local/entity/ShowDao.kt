@@ -7,6 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 
+/**
+ * DAO for Database of Shows
+ */
 @Dao
 interface ShowDao {
 
@@ -16,7 +19,7 @@ interface ShowDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(show: ShowEntity)
 
-    @Query("SELECT * FROM ShowEntity ORDER BY name ASC")
+    @Query("SELECT * FROM ShowEntity")
     fun pagingSource(): PagingSource<Int, ShowEntity>
 
     @Query("DELETE FROM showentity")

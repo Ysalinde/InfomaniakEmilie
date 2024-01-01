@@ -1,5 +1,8 @@
 package com.example.infomaniakemilie.domain
 
+/*
+ * Data Class of Show used to display UI information
+ */
 data class Show(
     val id: Int,
     val name: String,

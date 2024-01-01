@@ -4,6 +4,13 @@ import com.example.infomaniakemilie.data.local.entity.SeasonEntity
 import com.example.infomaniakemilie.data.remote.dto.SeasonDto
 import com.example.infomaniakemilie.domain.Season
 
+/*
+ * Mapper page for Seasons Datas
+ *
+ * 1. Dto -> Entity
+ * 2. Entity -> Object
+ */
+
 fun SeasonDto.toSeasonEntity(): SeasonEntity {
     val year = premiereDate?.let {
         it.take(4)

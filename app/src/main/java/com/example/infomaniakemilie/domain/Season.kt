@@ -1,5 +1,8 @@
 package com.example.infomaniakemilie.domain
 
+/*
+ * Data Class of Season used to display UI information
+ */
 data class Season(
     val id: Int,
     val number: Int,

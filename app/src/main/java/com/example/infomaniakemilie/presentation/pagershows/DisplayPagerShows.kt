@@ -21,6 +21,7 @@ import com.example.infomaniakemilie.ui.theme.BlueLight
 fun DisplayPagerShows(navController: NavHostController, context: Context){
     val viewModel = hiltViewModel<PagerShowViewModel>()
     val shows = viewModel.showPagingFlow.collectAsLazyPagingItems()
+
     Scaffold(
         containerColor = BlueLight,
         topBar = {
@@ -28,7 +29,7 @@ fun DisplayPagerShows(navController: NavHostController, context: Context){
                 topBarTitle = stringResource(id = R.string.pager_title),
                 navController,
             )
-        },
+        }
     ){ contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
             ShowScreen(

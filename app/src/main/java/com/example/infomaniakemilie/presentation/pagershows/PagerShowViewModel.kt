@@ -14,10 +14,9 @@ import javax.inject.Inject
 @HiltViewModel
 class PagerShowViewModel @Inject constructor(
     pager: Pager<Int, ShowEntity>
-): ViewModel(){
+): ViewModel() {
 
-    val showPagingFlow  = pager
-        .flow
+    val showPagingFlow = pager.flow
         .map { pagingData ->
             pagingData.map { it.toShow() }
         }

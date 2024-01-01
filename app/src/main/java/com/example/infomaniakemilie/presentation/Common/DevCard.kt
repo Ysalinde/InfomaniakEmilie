@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import com.example.infomaniakemilie.R
 import com.example.infomaniakemilie.ui.theme.PurpleGrey80
 
-
+/*
+ * My Dev Card
+ */
 @Composable
 fun DevCard() {
     ElevatedCard(

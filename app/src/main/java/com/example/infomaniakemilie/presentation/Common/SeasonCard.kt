@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Html
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,19 +75,34 @@ fun SeasonCard(navController: NavHostController, context: Context, season: Seaso
                 ),
         ) {
 
-            AsyncImage(
-                model = season.largeImg,
-                contentDescription = "Episode ${season.episodeOrder}, Season ${season.number}",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(13.dp))
-                    .border(
-                        BorderStroke(1.dp, Color.LightGray)
-                    )
-                    .height(150.dp)
-                    .width(125.dp)
-                    .align(Top),
-            )
+            if(season.largeImg.isNullOrBlank()){
+                Image(
+                    painter = painterResource(R.drawable.no_img),
+                    contentDescription = "No image",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(13.dp))
+                        .border(
+                            BorderStroke(1.dp, Color.LightGray)
+                        )
+                        .height(150.dp)
+                        .width(125.dp),
+                )
+            } else {
+                AsyncImage(
+                    model = season.largeImg,
+                    contentDescription = "Episode ${season.episodeOrder}, Season ${season.number}",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(13.dp))
+                        .border(
+                            BorderStroke(1.dp, Color.LightGray)
+                        )
+                        .height(150.dp)
+                        .width(125.dp)
+                        .align(Top),
+                )
+            }
 
             Spacer(modifier = Modifier.width(16.dp))
 
