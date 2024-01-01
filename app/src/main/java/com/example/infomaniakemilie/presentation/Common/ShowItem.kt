@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation.cards
+package com.example.infomaniakemilie.presentation.Common
 
 import android.content.Context
 import android.text.Html
@@ -38,7 +38,6 @@ import coil.compose.AsyncImage
 import com.example.infomaniakemilie.common.isConnected
 import com.example.infomaniakemilie.common.spannableStringToAnnotatedString
 import com.example.infomaniakemilie.domain.Show
-import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import com.example.infomaniakemilie.ui.theme.InfomaniakEmilieTheme
 import java.util.Objects.toString
 

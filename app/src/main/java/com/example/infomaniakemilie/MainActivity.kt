@@ -50,8 +50,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.infomaniakemilie.common.isConnected
-import com.example.infomaniakemilie.presentation.cards.DevCard
-import com.example.infomaniakemilie.presentation.dialog.CustomDialog
+import com.example.infomaniakemilie.presentation.Common.DevCard
+import com.example.infomaniakemilie.presentation.Common.CustomDialog
 import com.example.infomaniakemilie.presentation.episodes.ShowEpisodesScreen
 import com.example.infomaniakemilie.presentation.myshows.DisplayMyShows
 import com.example.infomaniakemilie.presentation.pagershows.DisplayPagerShows

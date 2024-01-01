@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation.cards
+package com.example.infomaniakemilie.presentation.Common
 
 import android.text.Html
 import androidx.compose.animation.animateContentSize

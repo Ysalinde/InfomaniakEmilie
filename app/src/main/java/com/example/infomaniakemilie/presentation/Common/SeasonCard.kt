@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation.cards
+package com.example.infomaniakemilie.presentation.Common
 
 import android.content.Context
 import android.text.Html
@@ -40,7 +40,6 @@ import com.example.infomaniakemilie.R
 import com.example.infomaniakemilie.common.isConnected
 import com.example.infomaniakemilie.common.spannableStringToAnnotatedString
 import com.example.infomaniakemilie.domain.Season
-import com.example.infomaniakemilie.presentation.dialog.CustomDialog
 import java.util.Objects
 
 @Composable

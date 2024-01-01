@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation.dialog
+package com.example.infomaniakemilie.presentation.Common
 
 import android.annotation.SuppressLint
 import android.content.Context

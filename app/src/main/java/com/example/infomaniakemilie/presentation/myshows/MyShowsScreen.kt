@@ -13,7 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.infomaniakemilie.presentation.cards.ShowCard
+import com.example.infomaniakemilie.presentation.Common.ShowCard
 
 @Composable
 fun MyShowsScreen(){

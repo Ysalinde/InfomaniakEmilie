@@ -22,7 +22,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.infomaniakemilie.domain.Show
-import com.example.infomaniakemilie.presentation.cards.ShowItem
+import com.example.infomaniakemilie.presentation.Common.ShowItem
 
 @Composable
 fun ShowScreen(

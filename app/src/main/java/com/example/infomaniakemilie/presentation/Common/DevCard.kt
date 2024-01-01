@@ -1,4 +1,4 @@
-package com.example.infomaniakemilie.presentation.cards
+package com.example.infomaniakemilie.presentation.Common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
